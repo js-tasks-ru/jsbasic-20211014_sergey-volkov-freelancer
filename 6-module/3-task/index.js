@@ -57,8 +57,6 @@ export default class Carousel {
     const arrowRight = this.elem.querySelector('.carousel__arrow_right');
     const arrowLeft = this.elem.querySelector('.carousel__arrow_left');
 
-    const that = this;
-
     this.slides.forEach(item => {
       const slide = this.renderSlide(item);
       container.append(slide);
@@ -66,43 +64,43 @@ export default class Carousel {
 
     const slidesNumber = container.querySelectorAll('.carousel__slide').length;
 
-    update();
-
-    function update(value) {
-      let offset = value * that.currentSlideNumber;
+    const update = (value = 0) => {
+      let offset = value * this.currentSlideNumber;
       container.style.transform = `translateX(${-offset}px)`;
 
-      if (that.currentSlideNumber === slidesNumber - 1) {
+      if (this.currentSlideNumber === slidesNumber - 1) {
         arrowRight.style.display = 'none';
       } else {
         arrowRight.style.display = '';
       }
 
-      if (that.currentSlideNumber === 0) {
+      if (this.currentSlideNumber === 0) {
         arrowLeft.style.display = 'none';
       } else {
         arrowLeft.style.display = '';
       }
-    }
+    };
 
-    function rightArrowClickHandler() {
+    const rightArrowClickHandler = () => {
       const offset = container.offsetWidth;
 
-      that.currentSlideNumber++;
+      this.currentSlideNumber++;
 
       update(offset);
-    }
+    };
 
-    function leftArrowClickHandler() {
+    const leftArrowClickHandler = () => {
       const offset = container.offsetWidth;
 
-      that.currentSlideNumber--;
+      this.currentSlideNumber--;
 
       update(offset);
-    }
+    };
 
     arrowRight.addEventListener('click', rightArrowClickHandler);
     arrowLeft.addEventListener('click', leftArrowClickHandler);
+
+    update();
   }
 
   buttonClickHandler = (evt) => {
